@@ -38,13 +38,15 @@ namespace Welcome_Page
             else if (count == 0)
             {
                 errorProvider2.Clear();
-                if (textBox7.Text != textBox6.Text || textBox6.Text != textBox7.Text)
+               
+                if (string.IsNullOrEmpty(name.Text) || string.IsNullOrEmpty(email.Text) || string.IsNullOrEmpty(university.Text) || string.IsNullOrEmpty(years.Text))
+                {
+                    MessageBox.Show("Please fill all the boxes");
+                }
+                else if (textBox7.Text != textBox6.Text || textBox6.Text != textBox7.Text)
                 {
                     errorProvider1.SetError(this.textBox7, "Password Not matched");
-                }
-                else if (string.IsNullOrEmpty(name.Text))
-                {
-                    MessageBox.Show("Write name");
+                   
                 }
 
                 else
