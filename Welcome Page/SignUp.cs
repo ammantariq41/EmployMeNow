@@ -52,6 +52,7 @@ namespace Welcome_Page
                         {
                             MessageBox.Show("REGISTERATION FAILED");
                             string check = string.Empty;
+                            int a  = 0;
                        
 
                         }
