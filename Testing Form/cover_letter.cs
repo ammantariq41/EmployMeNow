@@ -58,7 +58,7 @@ namespace Testing_form
             if (name.Text != "" & write.Text != " ")
             {
 
-                if (DAL.insertcover_in_DB(name.Text, write.Text){
+                if (DAL.insertcover_in_DB(name.Text, write.Text)){
 
 
                     SaveFileDialog saveFileDialog = new SaveFileDialog
@@ -90,9 +90,10 @@ namespace Testing_form
                         }
                     }
                 }
-
-
             }
+
+
+
             else
             {
                 MessageBox.Show(text: "PLEASE FILL ALL THE BOXES");
