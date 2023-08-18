@@ -60,7 +60,6 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="context.cs" />
     <Compile Include="Applications.cs">
       <SubType>Form</SubType>
     </Compile>

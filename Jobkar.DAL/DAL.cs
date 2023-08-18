@@ -129,6 +129,41 @@ namespace Jobkar.DAL
             }
         }
 
+        public static bool ValidateUser(string email, string password)
+        {
+            SqlConnection conn = new SqlConnection(cs);
+
+            string query = "select * from USERS_TABLE where EMAIL = @email and PASSWORD = @password";
+            SqlCommand cmd = new SqlCommand(query, conn);
+
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@password", password);
+            conn.Open();
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.HasRows == true)
+            {
+                while (dr.Read())
+                {
+                    int column1Value = (int)dr.GetValue(dr.GetOrdinal("ID"));
+                    string column2Value = dr.GetString(dr.GetOrdinal("EMAIL"));
+                    string column3Value = dr.GetString(dr.GetOrdinal("PASSWORD"));
+                    CurrentUser.userid = column1Value;
+                    CurrentUser.email = column2Value;
+                    CurrentUser.password = column3Value;
+                }
+                conn.Close();
+                return true;
+
+            }
+            else
+            {
+                conn.Close();
+                return false;
+            }
+
+        }
 
     }
              
