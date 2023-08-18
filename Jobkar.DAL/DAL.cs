@@ -87,10 +87,12 @@ namespace Jobkar.DAL
 
             if (count > 0)
             {
+                conn.Close();
                 return false;
             }
             else
             {
+                conn.Close();
                 return true;
 
             }

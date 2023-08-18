@@ -18,46 +18,47 @@ namespace Welcome_Page
 
         private void registerbtn_Click(object sender, EventArgs e)
         {
-
-            if (!DAL.check_email(email.Text))
-
-            { errorProvider2.SetError(this.email, "Email Alredy exists");}
-           
-            else
-
             {
 
-                if (string.IsNullOrEmpty(name.Text) || string.IsNullOrEmpty(email.Text) || string.IsNullOrEmpty(university.Text) || string.IsNullOrEmpty(years.Text))
+                if (!DAL.check_email(email.Text))
+
                 {
-                    MessageBox.Show("Please fill all the boxes");
-                }
-                else if (textBox7.Text != textBox6.Text || textBox6.Text != textBox7.Text)
-                {
-                    errorProvider1.SetError(this.textBox7, "Password Not matched");
+                    errorProvider2.SetError(this.email, "Email Alredy exists");
+                    
 
                 }
-
                 else
                 {
-                    if (DAL.insert_data_in_DB(email.Text, textBox6.Text, name.Text, university.Text, major.Text, years.Text, SavePhoto()))
+                    if (string.IsNullOrEmpty(name.Text) || string.IsNullOrEmpty(email.Text) || string.IsNullOrEmpty(university.Text) || string.IsNullOrEmpty(years.Text) || string.IsNullOrEmpty(textBox6.Text) || string.IsNullOrEmpty(textBox7.Text))
                     {
-                        MessageBox.Show("REGISTERED SUCCESSFULLY");
-                        this.Close();
-                        login login = new login();
-                        login.Show();
+                        MessageBox.Show("Please fill all the boxes");
+                    }
+                    else if (textBox7.Text != textBox6.Text || textBox6.Text != textBox7.Text)
+                    {
+                        errorProvider1.SetError(this.textBox7, "Password Not matched");
+
                     }
                     else
                     {
-                        MessageBox.Show("REGISTERATION FAILED");
+
+                        if (DAL.insert_data_in_DB(email.Text, textBox6.Text, name.Text, university.Text, major.Text, years.Text, SavePhoto()))
+                        {
+                            MessageBox.Show("REGISTERED SUCCESSFULLY");
+                            this.Close();
+                            login login = new login();
+                            login.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("REGISTERATION FAILED");
+                        }
+
                     }
-
-
                 }
-
-
+        
+                }
             }
-        }
-
+        
         public byte[] SavePhoto()
         {
             MemoryStream ms = new MemoryStream();
@@ -102,5 +103,7 @@ namespace Welcome_Page
                 pictureBox2.Image = new Bitmap(openFileDialog.FileName);
             }
         }
+
+       
     }
 }

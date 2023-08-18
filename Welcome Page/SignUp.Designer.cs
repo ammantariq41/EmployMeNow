@@ -184,6 +184,8 @@
             this.registerbtn.TabIndex = 14;
             this.registerbtn.Text = "REGISTER";
             this.registerbtn.UseVisualStyleBackColor = false;
+            this.registerbtn.Click += new System.EventHandler(this.registerbtn_Click);
+            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
