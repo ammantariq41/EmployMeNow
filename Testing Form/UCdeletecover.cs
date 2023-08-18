@@ -2,6 +2,8 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using Jobkar.DAL;
+
 
 namespace Testing_form
 {
@@ -17,11 +19,18 @@ namespace Testing_form
         public string UserInput { get; set; }
         private void okbtn_Click(object sender, EventArgs e)
         {
-       
-            
-            deletecover(cover);
-            DialogResult = DialogResult.OK;
-            this.Close();
+
+            if (DAL.deletecover(cover))
+            {
+                MessageBox.Show("Cover Letter Deleted!");
+                DialogResult = DialogResult.OK;
+                this.Close();
+
+            }
+            else
+                MessageBox.Show("Cover Letter Does not Exist!");
+
+
         }
 
         private void cancelbtn_Click(object sender, EventArgs e)
@@ -30,34 +39,7 @@ namespace Testing_form
             this.Close();
         }
 
-        public void deletecover(string covername)
-        {
-            
-            string name = covername;
-            SqlConnection con = new SqlConnection(cs);
-            string q = $"delete from cover_letter where name = '{name}' and user_id = {context.userid}";
-            SqlCommand cmd = new SqlCommand(q, con);
-
-
-            con.Open();
-
-            int a = cmd.ExecuteNonQuery();
-
-            if (a > 0)
-            {
-
-                MessageBox.Show("Cover Letter Deleted!");
-                this.Close();
-                
-
-            }
-            else
-            {
-                MessageBox.Show("Cover Letter Does not Exist!");
-
-            }
-            con.Close();
-        }
+        
 
     }
 }
