@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -7,7 +8,7 @@ namespace Jobkar.DAL
     public static class DAL
     {
         public static string cs = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
-        
+
         public static string GetCompanyEmail(string companyName)
         {
             SqlConnection conn = new SqlConnection(cs);
@@ -71,5 +72,65 @@ namespace Jobkar.DAL
                 return companyNames;
             }
         }
+
+        public static bool check_email(string email)
+        {
+
+            SqlConnection conn = new SqlConnection(cs);
+
+            string query = $"select count(*) from USERS_TABLE where EMAIL = '{email}'";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            conn.Open();
+
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+            if (count > 0)
+            {
+                conn.Close();
+                return false;
+            }
+            else
+            {
+                conn.Close();
+                return true;
+
+            }
+        }
+
+        public static bool insert_data_in_DB(string email, string password, string name, string university, string major, string years, byte[] picture)
+        {
+            SqlConnection conn = new SqlConnection(cs);
+            var imageData = picture;
+            string query3 = "insert into USERS_TABLE values(@EMAIL, @PASSWORD, @namee, @university, @major, @YEARS, @PICTURE)";
+            SqlCommand cmd3 = new SqlCommand(query3, conn);
+            conn.Open();
+
+            //main database
+            cmd3.Parameters.AddWithValue("@EMAIL", email); ;
+            cmd3.Parameters.AddWithValue("@PASSWORD", password);
+            cmd3.Parameters.AddWithValue("@namee", name); ;
+            cmd3.Parameters.AddWithValue("@university", university);
+            cmd3.Parameters.AddWithValue("@major", major); 
+            cmd3.Parameters.AddWithValue("@YEARS", years);
+            cmd3.Parameters.AddWithValue("@PICTURE", imageData);
+
+            int dr3 = cmd3.ExecuteNonQuery();
+            if (dr3 > 0)
+            {
+                conn.Close();
+                return true;
+             
+            }
+            else
+            {
+                conn.Close();
+                return false;
+                
+            }
+        }
+
+
     }
+             
 }
+

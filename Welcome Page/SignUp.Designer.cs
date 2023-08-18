@@ -44,7 +44,7 @@
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.registerbtn = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnback = new System.Windows.Forms.Button();
@@ -175,16 +175,16 @@
             this.label7.TabIndex = 13;
             this.label7.Text = "Confirm Password";
             // 
-            // button1
+            // registerbtn
             // 
-            this.button1.BackColor = System.Drawing.Color.LimeGreen;
-            this.button1.Location = new System.Drawing.Point(582, 342);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(136, 52);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "REGISTER";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.registerbtn.BackColor = System.Drawing.Color.LimeGreen;
+            this.registerbtn.Location = new System.Drawing.Point(582, 342);
+            this.registerbtn.Name = "registerbtn";
+            this.registerbtn.Size = new System.Drawing.Size(136, 52);
+            this.registerbtn.TabIndex = 14;
+            this.registerbtn.Text = "REGISTER";
+            this.registerbtn.UseVisualStyleBackColor = false;
+            this.registerbtn.Click += new System.EventHandler(this.registerbtn_Click);
             // 
             // errorProvider1
             // 
@@ -246,7 +246,7 @@
             this.Controls.Add(this.pic);
             this.Controls.Add(this.btnback);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.registerbtn);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox7);
@@ -290,7 +290,7 @@
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button registerbtn;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ErrorProvider errorProvider2;
