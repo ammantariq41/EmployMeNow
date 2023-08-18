@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jobkar.DAL;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -15,35 +16,10 @@ namespace Testing_form
             InitializeComponent();
             Letter_Name = name;
 
-            string letter = view_letter();
+            string letter = DAL.viewletter(Letter_Name);
             textBox1.Text = letter;
             
 
-        }
- 
-
-        public string view_letter()
-        {
-           
-            SqlConnection conn = new SqlConnection(cs);
-
-            string query1 = $"select letter from cover_letter where user_id = {context.userid} and name = '{Letter_Name}'";
-            SqlCommand cmd = new SqlCommand(query1, conn);
-
-            conn.Open();
-
-            string letter = Convert.ToString(cmd.ExecuteScalar());
-
-            if (!string.IsNullOrEmpty(letter))
-            {
-                return letter;
-            }
-            else
-            {
-                return "Cover Letter Does not Exist!";
-
-            }
-           
         }
 
         private void okbtn_Click(object sender, EventArgs e)

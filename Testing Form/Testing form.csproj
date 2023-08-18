@@ -60,7 +60,6 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="context.cs" />
     <Compile Include="Applications.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,12 +113,6 @@
     <Compile Include="PrintDocumentClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SideBarControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SideBarControl.Designer.cs">
-      <DependentUpon>SideBarControl.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Applications.resx">
       <DependentUpon>Applications.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,9 +147,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SideBarControl.resx">
-      <DependentUpon>SideBarControl.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

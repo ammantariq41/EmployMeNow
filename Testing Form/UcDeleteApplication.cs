@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using Jobkar.DAL;
 
 namespace Testing_form
 {
@@ -15,8 +16,15 @@ namespace Testing_form
         private void btnOK_Click(object sender, EventArgs e)
         {
             UserInput = textBox1.Text;
-            DialogResult = DialogResult.OK;
-            Close();
+            if (DAL.deleteapp(UserInput))
+            {
+                MessageBox.Show("Application Deleted!");
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+                MessageBox.Show("Application Does not Exist!");
+
         }
 
         private void btnCan_Click(object sender, EventArgs e)

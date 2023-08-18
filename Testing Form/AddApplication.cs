@@ -25,7 +25,7 @@ namespace Testing_form
             if (company != "" && position.Text != "")
             {
 
-                var appInserted = DAL.InsertApplication(company, position.Text, context.userid);
+                var appInserted = DAL.InsertApplication(company, position.Text, CurrentUser.userid);
                
                 if (!appInserted)
                 {
@@ -38,14 +38,14 @@ namespace Testing_form
 
                 UcSubmit Formm = new UcSubmit();
                 Formm.ShowDialog(this);
-                string from = context.email;
+                string from = CurrentUser.email;
                 string to = DAL.GetCompanyEmail(company);
 
                 string subject = position.Text;
                 string smtp = "smtp.gmail.com";
 
                 string email = from;
-                string password = context.password;
+                string password = CurrentUser.password;
 
                 string filePath = cover_textbox.Text;
                 string body = Helper.ReadTextFile(filePath);

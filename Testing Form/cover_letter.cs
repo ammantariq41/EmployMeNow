@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.IO;
+using Jobkar.DAL;
 
 namespace Testing_form
 {
@@ -32,11 +33,11 @@ namespace Testing_form
                 Grammar words = new DictationGrammar();
                 speech.LoadGrammar(words);
 
-                
-                speech.SetInputToDefaultAudioDevice(); 
+
+                speech.SetInputToDefaultAudioDevice();
                 RecognitionResult result = speech.Recognize();
 
-             
+
                 if (result != null)
                 {
                     write.Text = result.Text;
@@ -57,9 +58,9 @@ namespace Testing_form
             if (name.Text != "" & write.Text != " ")
             {
 
-                insert_in_DB();
-                
-                
+                if (DAL.insertcover_in_DB(name.Text, write.Text)){
+
+
                     SaveFileDialog saveFileDialog = new SaveFileDialog
                     {
                         Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
@@ -79,18 +80,20 @@ namespace Testing_form
                                 writer.Write(write.Text);
                             }
                             MessageBox.Show("File saved successfully!");
-                        name.Clear();
-                        write.Clear();
-                        
+                            name.Clear();
+                            write.Clear();
+
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show("An error occurred while saving the file: " + ex.Message);
                         }
                     }
-                
-
+                }
             }
+
+
+
             else
             {
                 MessageBox.Show(text: "PLEASE FILL ALL THE BOXES");
@@ -100,30 +103,6 @@ namespace Testing_form
         }
 
 
-
-        public void insert_in_DB()
-        {
-            SqlConnection conn = new SqlConnection(cs);
-
-            string query1 = "insert into cover_letter values(@name, @letter, @userid)";
-            SqlCommand cmd1 = new SqlCommand(query1, conn);
-
-            cmd1.Parameters.AddWithValue("@name", name.Text);
-            cmd1.Parameters.AddWithValue("@letter", write.Text);
-            cmd1.Parameters.AddWithValue("@userid", context.userid);
-
-            conn.Open();
-
-            int dr1 = cmd1.ExecuteNonQuery();
-
-            if (dr1 > 0)
-            {
-                MessageBox.Show(text: $"Cover Letter Saved with name {name.Text}");
-                conn.Close();
-
-            }
-        }
-
         private void viewbtn_Click(object sender, EventArgs e)
         {
             BindView();
@@ -132,14 +111,14 @@ namespace Testing_form
         void BindView()
         {
             SqlConnection con = new SqlConnection(cs);
-            string q = $"select name from cover_letter where user_id = {context.userid}";
+            string q = $"select name from cover_letter where user_id = {CurrentUser.userid}";
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(q, con);
             DataTable dataTable = new DataTable();
             sqlDataAdapter.Fill(dataTable);
             data_view.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             data_view.DataSource = dataTable;
         }
-       
+
         private string clickedName;
 
         public void data_view_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -153,6 +132,6 @@ namespace Testing_form
 
 
         }
-               
+
     }
 }
