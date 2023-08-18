@@ -136,6 +136,10 @@
     <None Include="Resources\welcome.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jobkar.DAL\Jobkar.DAL.csproj">
+      <Project>{94d01bdf-8a97-441e-a6e8-4c1ff31a982c}</Project>
+      <Name>Jobkar.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Testing form\Testing form.csproj">
       <Project>{29b418c5-8e4e-4e56-8b59-365d1171091a}</Project>
       <Name>Testing form</Name>

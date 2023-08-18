@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Jobkar.DAL;
+using System;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-using System.Security.Cryptography;
 using System.Windows.Forms;
-
 
 namespace Welcome_Page
 {
@@ -18,27 +16,17 @@ namespace Welcome_Page
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void registerbtn_Click(object sender, EventArgs e)
         {
 
-            string entered_email = email.Text;
-            SqlConnection conn = new SqlConnection(cs);
+            if (!DAL.check_email(email.Text))
 
-            string query = $"select count(*) from USERS_TABLE where EMAIL = '{entered_email}'";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            conn.Open();
+            { errorProvider2.SetError(this.email, "Email Alredy exists");}
+           
+            else
 
-
-            int count = Convert.ToInt32(cmd.ExecuteScalar());
-
-            if (count > 0)
             {
-                errorProvider2.SetError(this.email, "Email Already Exists");
-            }
-            else if (count == 0)
-            {
-                errorProvider2.Clear();
-               
+
                 if (string.IsNullOrEmpty(name.Text) || string.IsNullOrEmpty(email.Text) || string.IsNullOrEmpty(university.Text) || string.IsNullOrEmpty(years.Text))
                 {
                     MessageBox.Show("Please fill all the boxes");
@@ -46,64 +34,44 @@ namespace Welcome_Page
                 else if (textBox7.Text != textBox6.Text || textBox6.Text != textBox7.Text)
                 {
                     errorProvider1.SetError(this.textBox7, "Password Not matched");
-                   
+
                 }
 
                 else
                 {
-                    //SqlConnection conn = new SqlConnection(cs);
-                    var imageData = SavePhoto();
-                    string query3 = "insert into USERS_TABLE values(@EMAIL, @PASSWORD, @namee, @university, @major, @YEARS, @PICTURE)";
-                    SqlCommand cmd3 = new SqlCommand(query3, conn);
-
-
-                    //main database
-                    cmd3.Parameters.AddWithValue("@EMAIL", email.Text); ;
-                    cmd3.Parameters.AddWithValue("@PASSWORD", textBox6.Text);
-                    cmd3.Parameters.AddWithValue("@namee", name.Text); ;
-                    cmd3.Parameters.AddWithValue("@university", university.Text);
-                    cmd3.Parameters.AddWithValue("@major", major.Text); ;
-                    cmd3.Parameters.AddWithValue("@YEARS", years.Text);
-                    cmd3.Parameters.AddWithValue("@PICTURE", imageData);
-
-
-                    
-
-                    int dr3 = cmd3.ExecuteNonQuery();
-                    if (dr3 > 0)
+                    if (DAL.insert_data_in_DB(email.Text, textBox6.Text, name.Text, university.Text, major.Text, years.Text, SavePhoto()))
                     {
                         MessageBox.Show("REGISTERED SUCCESSFULLY");
-
                         this.Close();
                         login login = new login();
                         login.Show();
-
                     }
                     else
                     {
                         MessageBox.Show("REGISTERATION FAILED");
-                    }                   
+                    }
+
 
                 }
 
-            }
-            conn.Close();
 
+            }
         }
 
-        private byte[] SavePhoto()
+        public byte[] SavePhoto()
         {
             MemoryStream ms = new MemoryStream();
             pictureBox1.Image.Save(ms, pictureBox2.Image.RawFormat);
             return ms.ToArray();
         }
 
-        private void years_KeyPress(object sender, KeyPressEventArgs e)
+        public void years_KeyPress(object sender, KeyPressEventArgs e)
         {
             char ch = e.KeyChar;
-            if(char.IsDigit(ch)) {
+            if (char.IsDigit(ch))
+            {
                 e.Handled = false;
-            
+
             }
             else if (ch == 8)
             {
